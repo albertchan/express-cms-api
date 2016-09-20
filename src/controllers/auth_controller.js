@@ -1,44 +1,32 @@
 import validator from 'validator';
+import error from '../lib/errors';
 import { User } from '../models/user';
 
-export function add(req, res) {
-  res.render('auth/new', {
-    title: 'Login',
-    changeset: {}
-  });
-}
-
 export function login(req, res) {
-  if (!req.body) return res.status(400);
+  if (!req.body) return error.badRequest(req, res);
   const changeset = req.body;
 
   User.check(changeset).then(user => {
+    const data = user.toJSON();
+    const userData = {
+      id: data.id,
+      email: data.email,
+      username: data.username,
+      name: data.name
+    };
+
     req.session.user = {
       id: user.id,
       username: user.username
     };
-    res.redirect('/users');
+    res.status(200).json(userData);
   }).catch(err => {
-    const errors = [
-      {
-        code: 401,
-        message: err.message
-      }
-    ];
-
-    res.render('auth/new', {
-      title: 'Login',
-      changeset: changeset,
-      errors: errors
-    });
+    console.error('[API]:', err.message);
+    res.status(401).json({error: err.message});
   });
 }
 
 export function logout(req, res) {
   req.session.destroy();
-  res.redirect('/');
-}
-
-function checkPassword() {
-
+  res.status(200).json({success: 'Logged out successfully'});
 }
