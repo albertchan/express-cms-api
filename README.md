@@ -1,10 +1,42 @@
-# Brunch + Babel/ES6
+# express-cms-api
 
-This is a modern JS skeleton for [Brunch](http://brunch.io).
+## API Endpoints
 
-## Installation
+Authentication endpoints:
 
-Clone this repo manually or use `brunch new dir -s brunch/with-es6`
+```
+POST  /api/v1/login
+GET   /api/v1/logout
+```
+
+CRUD operations for users and posts:
+
+```
+GET     /api/v1/posts
+POST    /api/v1/new-post
+GET     /api/v1/posts/:id
+PUT     /api/v1/posts/:id
+DELETE  /api/v1/posts/:id
+GET     /api/v1/posts/slug/:id
+PUT     /api/v1/posts/slug/:id
+DELETE  /api/v1/posts/slug/:id
+```
+
+## Getting started
+
+```
+# Install dependencies
+npm install
+
+# Serve in development mode
+npm run development
+
+# Build for production
+npm run build-server
+
+# Server in production mode
+npm run prod-server
+```
 
 ## Database setup and migrations
 
@@ -23,20 +55,6 @@ Running `knex-cli` commands from within the project root:
 ```
 ./node_modules/.bin/knex <command>
 ```
-
-## Getting started
-
-* Install (if you don't have them):
-    * [Node.js](http://nodejs.org): `brew install node` on OS X
-    * [Brunch](http://brunch.io): `npm install -g brunch`
-    * Brunch plugins and app dependencies: `npm install`
-* Run:
-    * `brunch watch --server` — watches the project with continuous rebuild. This will also launch HTTP server with [pushState](https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Manipulating_the_browser_history).
-    * `brunch build --production` — builds minified project for production
-* Learn:
-    * `public/` dir is fully auto-generated and served by HTTP server.  Write your code in `app/` dir.
-    * Place static files you want to be copied from `client/assets/` to `public/`.
-    * [Brunch site](http://brunch.io), [Getting started guide](https://github.com/brunch/brunch-guide#readme)
 
 ## ES7
 
