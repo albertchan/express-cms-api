@@ -3,7 +3,20 @@ import error from '../lib/errors';
 import { Post } from '../models/post';
 
 export function findPage(req, res) {
-  Post.findPage().then(result => {
+  let options = {};
+
+  // apply filters
+  if (req.params.type === '@' && req.params.user_id) {
+    const userID = req.params.user_id;
+    options = {
+      filter: {prop: 'user_id', op: '=', value: userID}
+    };
+  }
+  if (req.params.type === '!@' && req.params.user_id) {
+    // TODO for username
+  }
+
+  Post.findPage(options).then(result => {
     res.status(200).json(result);
   }).catch(err => {
     console.log(err);

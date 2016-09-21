@@ -16,7 +16,17 @@ const router = express.Router();
 // ------------------------------------
 // Users API
 // ------------------------------------
+
+// order matters!
 router.route('/posts')
+  .get(findPage)
+  .post(error.methodNotAllowed)
+  .put(error.methodNotAllowed)
+  .delete(error.methodNotAllowed);
+
+// this match must come before `/posts/:id`
+// router.route(/\/posts\/(@|!@)(.+)/)
+router.route('/posts/:type(@|!@):user_id')
   .get(findPage)
   .post(error.methodNotAllowed)
   .put(error.methodNotAllowed)

@@ -32,6 +32,11 @@ export const filter = function(Bookshelf) {
       // TODO: implement query builder
       this.query(qb => {
         qb.where('id', '>', 0);
+
+        if (options.filter) {
+          const _filter = options.filter;
+          qb.where(_filter.prop, _filter.op, _filter.value);
+        }
       });
 
       return this;
