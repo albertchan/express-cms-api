@@ -10,6 +10,7 @@ export const schema = {
   country_code: { type: 'string', maxlength: 8, nullable: true },
   zip_code: { type: 'string', maxlength: 32, nullable: true },
   tel_number: { type: 'string', maxlength: 32, nullable: true },
+  avatar_url: { type: 'string', maxlength: 255, nullable: true, validations: { isURL: true }},
   bio: { type: 'text', maxlength: 65535, nullable: true },
   timestamps: { type: 'timestamps' }
 };
