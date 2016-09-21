@@ -28,6 +28,12 @@ router.route('/posts/:id')
   .put(updateByID)
   .delete(deleteByID);
 
+router.route('/new-post')
+  .get(error.methodNotAllowed)
+  .post(create)
+  .put(error.methodNotAllowed)
+  .delete(error.methodNotAllowed);
+
 router.route('/posts/slug/:id')
   .get(readBySlug)
   .post(error.methodNotAllowed)

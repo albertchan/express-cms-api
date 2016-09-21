@@ -16,10 +16,12 @@ export function create(req, res, next) {
   if (!req.body) return res.status(400);
 
   const changeset = req.body;
-  User.add(changeset).then(result => {
-    if (result.user_id) {
-      res.redirect('/users');
-    }
+  User.add(changeset).then(user => {
+    delete user.password;
+    res.status(200).json(user);
+  }).catch(err => {
+    console.error(err.message);
+    res.status(400).json({error: error.message});
   });
 }
 

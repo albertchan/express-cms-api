@@ -13,6 +13,12 @@ const router = express.Router();
 // ------------------------------------
 // Users API
 // ------------------------------------
+router.route('/new-user')
+  .get(error.methodNotAllowed)
+  .post(create)
+  .put(error.methodNotAllowed)
+  .delete(error.methodNotAllowed);
+
 router.route('/users')
   .get(findPage)
   .post(error.methodNotAllowed)
@@ -21,7 +27,7 @@ router.route('/users')
 
 router.route('/users/:id')
   .get(read)
-  .post(create)
+  .post(error.methodNotAllowed)
   .put(update)
   .delete(destroy);
 

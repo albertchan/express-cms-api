@@ -112,11 +112,6 @@ export class User extends Bookshelf.Model {
             return error;
           });
       });
-    }).then(model => {
-      return model.toJSON();
-    }).catch(error => {
-      console.error(error);
-      return error;
     });
   }
 
