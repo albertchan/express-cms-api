@@ -46,6 +46,42 @@ export class Profile extends Bookshelf.Model {
 
     return options;
   }
+
+  /**
+   * update
+   *
+   * Updates the profile object.
+   *
+   * @param {object} data
+   * @param {object} options
+   */
+  static update(data, options) {
+    const profileData = data;
+    // delete data.profile;
+    // const userData = data;
+
+    console.log('profileData', profileData);
+    // console.log('userData', userData);
+
+    // return Bookshelf.transaction(t => {
+    //   return Profile.forge({user_id: validator.toInt(data.id)})
+    //     .save(userData, {transacting: t})
+    //     .then(addedUser => {
+    //       // TODO: Need to wait for Bookshelf to get relations right and refactor
+    //       // this ugly manual crap
+    //       return Profile.forge().save({user_id: addedUser.id}, {transacting: t});
+    //     })
+    //     .then(addedProfile => {
+    //       t.commit;
+    //       return addedProfile;
+    //     })
+    //     .catch(error => {
+    //       t.rollback;
+    //       console.error(error);
+    //       return error;
+    //     });
+    // });
+  }
 }
 
 export default Bookshelf.model('Profile', Profile);

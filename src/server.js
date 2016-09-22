@@ -2,7 +2,6 @@ import _merge from 'lodash/merge';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import connectSession from 'connect-session-knex';
-import cors from 'cors';
 import Express from 'express';
 import hbs from 'hbs';
 import path from 'path';

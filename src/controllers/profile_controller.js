@@ -1,3 +1,4 @@
+import _assign from 'lodash/assign';
 import validator from 'validator';
 import { User } from '../models/user';
 import { Profile } from '../models/profile';
@@ -24,8 +25,29 @@ export function read(req, res) {
   });
 }
 
-export function update(req, res) {
-  res.status(200).json();
+function update(idObj, data, res) {
+  _assign(data, idObj);
+
+  Profile.update(data).then(result => {
+    const profileData = result.toJSON();
+    res.status(200).json(profileData);
+  }).catch(err => {
+    console.error(err);
+    res.status(400).json({code: 400, error: err.message});
+  });
+}
+
+export function updateByUserID(req, res) {
+  if (!req.body) return error.badRequest(req, res);
+  const id = req.params.id;
+  const data = req.body;
+  console.log('req.body', req.body);
+  // const data = JSON.parse(req.body);
+
+  if (isNaN(id)) {
+    return error.badRequest(req, res);
+  }
+  update({user_id: id}, data, res);
 }
 
 export function destroy(req, res) {

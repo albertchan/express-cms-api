@@ -61,9 +61,9 @@ Bookshelf.Model = Bookshelf.Model.extend({
 
     _each(attrs, function each(value, key) {
       if (value !== null
-        && (schema[self.tableName].hasOwnProperty(key)
-        && schema[self.tableName][key].type === 'dateTime')
-        || (key == 'created_at' || key == 'updated_at')) {
+          && (schema[self.tableName].hasOwnProperty(key)
+          && schema[self.tableName][key].type === 'dateTime')
+          || (key == 'created_at' || key == 'updated_at')) {
         attrs[key] = moment(value).toDate();
       }
     });
@@ -72,7 +72,14 @@ Bookshelf.Model = Bookshelf.Model.extend({
 
   // Normalize date format before inserting into database
   formatDateWhenSave(attrs) {
-
+    _each(attrs, function each(value, key) {
+      if (value !== null
+          && schema[self.tableName].hasOwnProperty(key)
+          && schema[self.tableName][key].type === 'dateTime') {
+        attrs[key] = moment(value).format('YYYY-MM-DD HH:mm:ss');
+      }
+    });
+    return attrs;
   }
 }, {
   // Data utility functions

@@ -138,15 +138,14 @@ export class User extends Bookshelf.Model {
   }
 
   /**
-   * edit
+   * update
    *
-   * Edits the user object.
+   * Updates the user object.
    *
    * @param {object} data
    * @param {object} options
    */
-  static edit(data, options) {
-
+  static update(data, options) {
   }
 
   /**

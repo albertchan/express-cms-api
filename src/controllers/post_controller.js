@@ -52,6 +52,20 @@ export function readBySlug(req, res) {
   fetch({slug: id}, res);
 }
 
+export function deleteByID(req, res) {
+  const id = req.params.id;
+
+  if (isNaN(id)) {
+    return error.badRequest(req, res);
+  }
+  destroy({id: id}, res);
+}
+
+export function deleteBySlug(req, res) {
+  const id = req.params.id;
+  destroy({slug: id}, res);
+}
+
 export function updateByID(req, res) {
   if (!req.body) return error.badRequest(req, res);
   const id = req.params.id;
@@ -69,20 +83,6 @@ export function updateBySlug(req, res) {
   const data = req.body;
 
   update({slug: id}, data, res);
-}
-
-export function deleteByID(req, res) {
-  const id = req.params.id;
-
-  if (isNaN(id)) {
-    return error.badRequest(req, res);
-  }
-  destroy({id: id}, res);
-}
-
-export function deleteBySlug(req, res) {
-  const id = req.params.id;
-  destroy({slug: id}, res);
 }
 
 function destroy(idObj, res) {

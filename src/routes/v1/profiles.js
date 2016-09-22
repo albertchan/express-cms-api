@@ -2,7 +2,7 @@ import express from 'express';
 import error from '../../lib/errors';
 import {
   read,
-  update
+  updateByUserID
 } from '../../controllers/profile_controller';
 
 const router = express.Router();
@@ -18,8 +18,8 @@ router.route('/profiles/:id')
 
 router.route('/profiles/:id/edit')
   .get(error.methodNotAllowed)
-  .post(error.methodNotAllowed)
-  .put(update)
+  .post(updateByUserID)
+  .put(error.methodNotAllowed)
   .delete(error.methodNotAllowed);
 
 export default router;
