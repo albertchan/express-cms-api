@@ -57,11 +57,6 @@ export class Profile extends Bookshelf.Model {
    */
   static update(data, options) {
     const profileData = data;
-    // delete data.profile;
-    // const userData = data;
-
-    console.log('profileData', profileData);
-    // console.log('userData', userData);
 
     // return Bookshelf.transaction(t => {
     //   return Profile.forge({user_id: validator.toInt(data.id)})
