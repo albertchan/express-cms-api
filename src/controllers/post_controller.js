@@ -7,20 +7,21 @@ export function findPage(req, res) {
 
   // apply filters
   if (req.params.type === '@' && req.params.user_id) {
-    const userID = req.params.user_id;
     options = {
-      filter: {prop: 'user_id', op: '=', value: userID}
+      filter: {prop: 'slug', op: '=', value: req.params.user_id}
     };
   }
-  if (req.params.type === '!@' && req.params.user_id) {
-    // TODO for username
+  if (!req.params.type && req.params.user_id) {
+    options = {
+      filter: {prop: 'user_id', op: '=', value: req.params.user_id}
+    }
   }
 
   Post.findPage(options).then(result => {
     res.status(200).json(result);
   }).catch(err => {
     console.log(err);
-    res.status(400).json({error: err.message});
+    res.status(400).json({ error: err.message });
   });
 }
 
@@ -34,8 +35,20 @@ export function create(req, res) {
   Post.add(changeset).then(result => {
     res.status(200).json(result.toJSON());
   }).catch(err => {
-    res.status(400).json({error: err.message});
+    res.status(400).json({ error: err.message });
   });
+}
+
+export function readPostByProfile(req, res) {
+  const post_id = req.params.post_id;
+  const user_id = req.params.user_id;
+
+  console.log('readPostByProfile', user_id, post_id);
+
+  if (isNaN(post_id) && isNaN(user_id)) {
+    return error.badRequest(req, res);
+  }
+  fetch({ id: post_id, user_id }, res);
 }
 
 export function readByID(req, res) {
@@ -44,12 +57,12 @@ export function readByID(req, res) {
   if (isNaN(id)) {
     return error.badRequest(req, res);
   }
-  fetch({id: id}, res);
+  fetch({ id: id }, res);
 }
 
 export function readBySlug(req, res) {
   const id = req.params.id;
-  fetch({slug: id}, res);
+  fetch({ slug: id }, res);
 }
 
 export function deleteByID(req, res) {
@@ -58,12 +71,12 @@ export function deleteByID(req, res) {
   if (isNaN(id)) {
     return error.badRequest(req, res);
   }
-  destroy({id: id}, res);
+  destroy({ id: id }, res);
 }
 
 export function deleteBySlug(req, res) {
   const id = req.params.id;
-  destroy({slug: id}, res);
+  destroy({ slug: id }, res);
 }
 
 export function updateByID(req, res) {
@@ -74,7 +87,7 @@ export function updateByID(req, res) {
   if (isNaN(id)) {
     return error.badRequest(req, res);
   }
-  update({id: id}, data, res);
+  update({ id: id }, data, res);
 }
 
 export function updateBySlug(req, res) {
@@ -87,9 +100,9 @@ export function updateBySlug(req, res) {
 
 function destroy(idObj, res) {
   Post.forge(idObj).destroy().then(model => {
-    res.status(200).json({success: 'deleted', model});
+    res.status(200).json({ success: 'deleted', model });
   }).catch(err => {
-    res.status(500).json({code: 500, error: err.message});
+    res.status(500).json({ code: 500, error: err.message });
   });
 }
 
@@ -97,7 +110,7 @@ function fetch(data, res) {
   Post.findOne(data).then(post => {
     res.status(200).json(post.toJSON());
   }).catch(err => {
-    res.status(404).json({error: err.message});
+    res.status(404).json({ error: err.message });
   });
 }
 
